@@ -11,11 +11,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`navbar${user?.role === 'admin' ? ' navbar-admin' : ''}`}>
+    <nav className="navbar">
       <Link to="/" className="brand">
-        <span className="brand-mark">T</span>
-        <span className="brand-word">Tavola</span>
-        {user?.role === 'admin' && <span className="brand-tag">Ledger</span>}
+        🍽️ Reservations
       </Link>
       <div className="nav-links">
         {user?.role === 'customer' && <Link to="/dashboard">My Reservations</Link>}

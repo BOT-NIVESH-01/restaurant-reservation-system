@@ -91,7 +91,6 @@ export default function CustomerDashboard() {
   return (
     <div className="page">
       <h1>My Reservations</h1>
-      <p className="page-subtitle">Book a table, then track it here</p>
 
       <section className="card">
         <h2>Book a table</h2>

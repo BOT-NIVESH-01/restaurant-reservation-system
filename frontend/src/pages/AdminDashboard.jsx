@@ -82,7 +82,6 @@ export default function AdminDashboard() {
   return (
     <div className="page">
       <h1>Admin Dashboard</h1>
-      <p className="page-subtitle">Every reservation, every table, one ledger</p>
       {message && <div className={`alert alert-${message.type}`}>{message.text}</div>}
 
       <section className="card">

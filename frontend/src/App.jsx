@@ -15,11 +15,10 @@ function Home() {
 }
 
 export default function App() {
-  const { user } = useAuth();
   return (
     <>
       <Navbar />
-      <main className={user?.role === 'admin' ? 'main-admin' : ''}>
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
