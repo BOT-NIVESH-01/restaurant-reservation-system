@@ -1,0 +1,48 @@
+// Seeds a fixed set of tables and a default admin account.
+// Run with: npm run seed
+require('dotenv').config();
+const mongoose = require('mongoose');
+const connectDB = require('../config/db');
+const Table = require('../models/Table');
+const User = require('../models/User');
+
+const TABLES = [
+  { label: 'T1', capacity: 2 },
+  { label: 'T2', capacity: 2 },
+  { label: 'T3', capacity: 4 },
+  { label: 'T4', capacity: 4 },
+  { label: 'T5', capacity: 6 },
+  { label: 'T6', capacity: 8 },
+];
+
+const seed = async () => {
+  await connectDB();
+
+  await Table.deleteMany({});
+  await Table.insertMany(TABLES);
+  console.log(`Seeded ${TABLES.length} tables`);
+
+  const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@restaurant.com';
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'Admin@123';
+
+  const existingAdmin = await User.findOne({ email: adminEmail });
+  if (!existingAdmin) {
+    await User.create({
+      name: 'Restaurant Admin',
+      email: adminEmail,
+      password: adminPassword,
+      role: 'admin',
+    });
+    console.log(`Seeded admin account: ${adminEmail} / ${adminPassword}`);
+  } else {
+    console.log('Admin account already exists, skipping');
+  }
+
+  await mongoose.disconnect();
+  process.exit(0);
+};
+
+seed().catch((err) => {
+  console.error('Seeding failed:', err);
+  process.exit(1);
+});
