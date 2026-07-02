@@ -15,7 +15,7 @@ export default function CustomerDashboard() {
   const [selectedTable, setSelectedTable] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
   const [booking, setBooking] = useState(false);
-  const [message, setMessage] = useState(null); // { type, text }
+  const [message, setMessage] = useState(null);
 
   const loadReservations = async () => {
     setLoadingList(true);

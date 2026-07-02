@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const ApiError = require('../utils/ApiError');
 
-// Verifies the JWT and attaches the authenticated user to req.user.
 const protect = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -28,7 +27,6 @@ const protect = async (req, res, next) => {
   }
 };
 
-// Restricts access to specific roles. Usage: authorize('admin')
 const authorize = (...roles) => (req, res, next) => {
   if (!req.user || !roles.includes(req.user.role)) {
     return next(new ApiError(403, 'You do not have permission to perform this action'));

@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-// Fixed set of bookable time slots. Using fixed slots (rather than free-form
-// start/end times) keeps the overlap-detection logic simple and unambiguous:
-// two reservations conflict only if they share the same table, same date,
-// and the same slot.
 const TIME_SLOTS = [
   '12:00-13:30',
   '13:30-15:00',
@@ -24,7 +20,6 @@ const reservationSchema = new mongoose.Schema(
       ref: 'Table',
       required: true,
     },
-    // Stored as a UTC midnight Date representing the calendar day only.
     reservationDate: {
       type: Date,
       required: [true, 'Reservation date is required'],
@@ -48,10 +43,6 @@ const reservationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Application-level conflict checks are the primary safeguard (see
-// reservationController). This partial unique index is a database-level
-// safety net that prevents two *confirmed* reservations from ever existing
-// for the same table + date + slot, even under concurrent requests.
 reservationSchema.index(
   { table: 1, reservationDate: 1, timeSlot: 1 },
   { unique: true, partialFilterExpression: { status: 'confirmed' } }

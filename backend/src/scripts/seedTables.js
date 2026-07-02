@@ -1,5 +1,3 @@
-// Seeds a fixed set of tables and a default admin account.
-// Run with: npm run seed
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');

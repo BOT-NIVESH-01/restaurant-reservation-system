@@ -3,10 +3,6 @@ const Table = require('../models/Table');
 const ApiError = require('../utils/ApiError');
 const { normalizeDate, isPastDate } = require('../utils/date');
 
-// GET /api/reservations/availability?date=YYYY-MM-DD&guests=2
-// Returns, for a given date and party size, which tables are free on which
-// slots. This lets the frontend only offer choices that will actually
-// succeed, rather than letting the user guess and hit a 409.
 exports.getAvailability = async (req, res, next) => {
   try {
     const { date, guests } = req.query;
@@ -43,7 +39,6 @@ exports.getAvailability = async (req, res, next) => {
   }
 };
 
-// POST /api/reservations  (customer)
 exports.createReservation = async (req, res, next) => {
   try {
     const { tableId, reservationDate: rawDate, timeSlot, guests } = req.body;
@@ -71,7 +66,6 @@ exports.createReservation = async (req, res, next) => {
       );
     }
 
-    // Explicit pre-check gives a clean, friendly 409 in the common case.
     const conflict = await Reservation.findOne({
       table: table._id,
       reservationDate,
@@ -82,8 +76,6 @@ exports.createReservation = async (req, res, next) => {
       throw new ApiError(409, 'This table is already booked for the selected date and time slot');
     }
 
-    // The unique partial index on the model is the final safeguard against
-    // a race condition between the check above and this insert.
     const reservation = await Reservation.create({
       user: req.user._id,
       table: table._id,
@@ -102,7 +94,6 @@ exports.createReservation = async (req, res, next) => {
   }
 };
 
-// GET /api/reservations/me  (customer — own reservations only)
 exports.getMyReservations = async (req, res, next) => {
   try {
     const reservations = await Reservation.find({ user: req.user._id })
@@ -114,7 +105,6 @@ exports.getMyReservations = async (req, res, next) => {
   }
 };
 
-// PATCH /api/reservations/:id/cancel  (customer — own reservation only)
 exports.cancelMyReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id);

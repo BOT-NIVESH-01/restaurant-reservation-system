@@ -3,9 +3,6 @@ const Table = require('../models/Table');
 const ApiError = require('../utils/ApiError');
 const { normalizeDate, isPastDate } = require('../utils/date');
 
-// GET /api/admin/reservations?date=YYYY-MM-DD&status=confirmed
-// Supports optional filtering by date and/or status. Without a date filter,
-// returns every reservation in the system.
 exports.getAllReservations = async (req, res, next) => {
   try {
     const { date, status } = req.query;
@@ -34,7 +31,6 @@ exports.getAllReservations = async (req, res, next) => {
   }
 };
 
-// PATCH /api/admin/reservations/:id  (admin — update date/slot/table/guests/status)
 exports.updateReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id);
@@ -61,8 +57,6 @@ exports.updateReservation = async (req, res, next) => {
       throw new ApiError(400, `Table ${table.label} seats up to ${table.capacity} guests`);
     }
 
-    // Only re-check conflicts if something that affects uniqueness changed,
-    // and only against other confirmed reservations (excluding this one).
     const somethingMoved =
       String(table._id) !== String(reservation.table) ||
       nextDate.getTime() !== reservation.reservationDate.getTime() ||
@@ -107,7 +101,6 @@ exports.updateReservation = async (req, res, next) => {
   }
 };
 
-// PATCH /api/admin/reservations/:id/cancel  (admin — cancel any reservation)
 exports.cancelAnyReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id);

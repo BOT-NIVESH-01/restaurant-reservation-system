@@ -36,9 +36,23 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    loadReservations();
-    loadTables();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initialize = async () => {
+      setLoading(true);
+      try {
+        const [reservationsRes, tablesRes] = await Promise.all([
+          client.get('/admin/reservations'),
+          client.get('/tables'),
+        ]);
+        setReservations(reservationsRes.data.reservations);
+        setTables(tablesRes.data.tables);
+      } catch (err) {
+        setMessage({ type: 'error', text: err.message });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void initialize();
   }, []);
 
   const handleFilter = (e) => {

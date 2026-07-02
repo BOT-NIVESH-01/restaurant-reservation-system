@@ -1,9 +1,6 @@
 const Table = require('../models/Table');
 const ApiError = require('../utils/ApiError');
 
-// GET /api/tables  (any authenticated user)
-// Customers only see active tables (what they can actually book).
-// Admins see every table, including deactivated ones, so they can manage them.
 exports.listTables = async (req, res, next) => {
   try {
     const filter = req.user.role === 'admin' ? {} : { isActive: true };
@@ -14,7 +11,6 @@ exports.listTables = async (req, res, next) => {
   }
 };
 
-// POST /api/tables  (admin only)
 exports.createTable = async (req, res, next) => {
   try {
     const { label, capacity } = req.body;
@@ -25,7 +21,6 @@ exports.createTable = async (req, res, next) => {
   }
 };
 
-// PATCH /api/tables/:id  (admin only)
 exports.updateTable = async (req, res, next) => {
   try {
     const { label, capacity, isActive } = req.body;
@@ -43,7 +38,6 @@ exports.updateTable = async (req, res, next) => {
   }
 };
 
-// DELETE /api/tables/:id  (admin only)
 exports.deleteTable = async (req, res, next) => {
   try {
     const table = await Table.findById(req.params.id);

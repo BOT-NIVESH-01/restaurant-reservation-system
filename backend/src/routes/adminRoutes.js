@@ -8,7 +8,6 @@ const {
 
 const router = express.Router();
 
-// Every route below requires a logged-in admin.
 router.use(protect, authorize('admin'));
 
 router.get('/reservations', getAllReservations);

@@ -15,7 +15,7 @@ const tableSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      default: true, // allows admins to retire a table without deleting history
+      default: true,
     },
   },
   { timestamps: true }

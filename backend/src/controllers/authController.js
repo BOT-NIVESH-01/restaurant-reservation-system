@@ -14,11 +14,6 @@ const sanitizeUser = (user) => ({
   role: user.role,
 });
 
-// POST /api/auth/register
-// Note: role is intentionally NOT accepted from the request body for normal
-// signups — every self-registered account is a "customer". Admin accounts
-// are created via the seed script / directly in the database, so a regular
-// user can never grant themselves admin rights through the API.
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -37,7 +32,6 @@ exports.register = async (req, res, next) => {
   }
 };
 
-// POST /api/auth/login
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -54,7 +48,6 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// GET /api/auth/me
 exports.getMe = async (req, res, next) => {
   try {
     res.status(200).json({ user: sanitizeUser(req.user) });
