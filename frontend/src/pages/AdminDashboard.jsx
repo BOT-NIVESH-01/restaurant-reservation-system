@@ -65,6 +65,7 @@ export default function AdminDashboard() {
       });
       setNewTable({ label: '', capacity: 2 });
       loadTables();
+      setMessage({ type: 'success', text: 'Table added successfully' });
     } catch (err) {
       setMessage({ type: 'error', text: err.message });
     }
@@ -74,6 +75,21 @@ export default function AdminDashboard() {
     try {
       await client.patch(`/tables/${table._id}`, { isActive: !table.isActive });
       loadTables();
+      setMessage({ 
+        type: 'success', 
+        text: `Table ${table.isActive ? 'deactivated' : 'activated'} successfully` 
+      });
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message });
+    }
+  };
+
+  const handleDeleteTable = async (table) => {
+    if (!window.confirm(`Delete table "${table.label}"? This action cannot be undone.`)) return;
+    try {
+      await client.delete(`/tables/${table._id}`);
+      loadTables();
+      setMessage({ type: 'success', text: 'Table deleted successfully' });
     } catch (err) {
       setMessage({ type: 'error', text: err.message });
     }
@@ -203,9 +219,15 @@ export default function AdminDashboard() {
                 <td>{t.label}</td>
                 <td>{t.capacity}</td>
                 <td>{t.isActive ? 'Active' : 'Inactive'}</td>
-                <td>
+                <td style={{ display: 'flex', gap: '0.5rem' }}>
                   <button className="btn btn-outline btn-sm" onClick={() => handleToggleTable(t)}>
                     {t.isActive ? 'Deactivate' : 'Activate'}
+                  </button>
+                  <button 
+                    className="btn btn-outline btn-sm btn-danger" 
+                    onClick={() => handleDeleteTable(t)}
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
