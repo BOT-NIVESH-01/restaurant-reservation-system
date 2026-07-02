@@ -1,0 +1,20 @@
+# Optional Render Blueprint. You can also just create a Web Service manually
+# in the Render dashboard pointing at the /backend directory.
+services:
+  - type: web
+    name: restaurant-reservation-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: PORT
+        value: 5000
