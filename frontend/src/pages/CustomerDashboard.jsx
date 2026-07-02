@@ -15,7 +15,7 @@ export default function CustomerDashboard() {
   const [selectedTable, setSelectedTable] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
   const [booking, setBooking] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState(null); // { type, text }
 
   const loadReservations = async () => {
     setLoadingList(true);
@@ -91,6 +91,7 @@ export default function CustomerDashboard() {
   return (
     <div className="page">
       <h1>My Reservations</h1>
+      <p className="page-subtitle">Book a table, then track it here</p>
 
       <section className="card">
         <h2>Book a table</h2>

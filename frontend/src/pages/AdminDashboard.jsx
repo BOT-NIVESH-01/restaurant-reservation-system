@@ -36,23 +36,9 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    const initialize = async () => {
-      setLoading(true);
-      try {
-        const [reservationsRes, tablesRes] = await Promise.all([
-          client.get('/admin/reservations'),
-          client.get('/tables'),
-        ]);
-        setReservations(reservationsRes.data.reservations);
-        setTables(tablesRes.data.tables);
-      } catch (err) {
-        setMessage({ type: 'error', text: err.message });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void initialize();
+    loadReservations();
+    loadTables();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFilter = (e) => {
@@ -96,6 +82,7 @@ export default function AdminDashboard() {
   return (
     <div className="page">
       <h1>Admin Dashboard</h1>
+      <p className="page-subtitle">Every reservation, every table, one ledger</p>
       {message && <div className={`alert alert-${message.type}`}>{message.text}</div>}
 
       <section className="card">
