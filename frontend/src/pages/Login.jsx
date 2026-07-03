@@ -58,8 +58,13 @@ export default function Login() {
       </form>
       <p>
         <u>Admin Credentials : </u><br/><br/>
-        <u>Email : admin@restaurant.com</u><br/><br/>
-        <u>Password : Admin123</u>
+      </p>
+      <p>
+        <u>Email : </u>admin@restaurant.com<br/><br/>
+        <u>Password : </u>Admin@123
+      </p>
+      <p>
+        For User Credentials, please register a new account.
       </p>
       <p className="auth-switch">
         No account? <Link to="/register">Register here</Link>
