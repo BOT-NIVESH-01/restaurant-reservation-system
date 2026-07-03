@@ -56,6 +56,11 @@ export default function Login() {
           {submitting ? 'Logging in...' : 'Login'}
         </button>
       </form>
+      <p>
+        <u>Admin Credentials : </u><br/><br/>
+        <u>Email : admin@restaurant.com</u><br/><br/>
+        <u>Password : Admin123</u>
+      </p>
       <p className="auth-switch">
         No account? <Link to="/register">Register here</Link>
       </p>
