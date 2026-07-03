@@ -117,3 +117,43 @@ input, select {
   font-size: 0.8rem;
 }
 .slot-btn.selected { background: #2563eb; color: white; border-color: #2563eb; }
+
+/* Loading Spinner Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+}
+
+.loading-hint {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+  max-width: 400px;
+}

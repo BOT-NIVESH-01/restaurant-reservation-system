@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import client from '../api/client';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const todayStr = () => new Date().toISOString().slice(0, 10);
 
@@ -174,7 +175,7 @@ export default function CustomerDashboard() {
       <section className="card">
         <h2>Upcoming & past reservations</h2>
         {loadingList ? (
-          <p>Loading...</p>
+          <LoadingSpinner message="Loading your reservations..." />
         ) : reservations.length === 0 ? (
           <p className="muted">No reservations yet.</p>
         ) : (

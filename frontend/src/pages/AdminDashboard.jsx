@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import client from '../api/client';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function AdminDashboard() {
   const [reservations, setReservations] = useState([]);
@@ -132,7 +133,7 @@ export default function AdminDashboard() {
         </form>
 
         {loading ? (
-          <p>Loading...</p>
+          <LoadingSpinner message="Loading reservations..." />
         ) : reservations.length === 0 ? (
           <p className="muted">No reservations found.</p>
         ) : (
