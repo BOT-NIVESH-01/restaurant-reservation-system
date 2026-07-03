@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Login() {
   const { login } = useAuth();
@@ -18,10 +19,13 @@ export default function Login() {
       navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       setError(err.message);
-    } finally {
       setSubmitting(false);
     }
   };
+
+  if (submitting) {
+    return <LoadingSpinner message="Logging in..." />;
+  }
 
   return (
     <div className="auth-card">
@@ -35,6 +39,7 @@ export default function Login() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
+            disabled={submitting}
           />
         </label>
         <label>
@@ -44,22 +49,13 @@ export default function Login() {
             required
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
+            disabled={submitting}
           />
         </label>
         <button type="submit" className="btn btn-primary" disabled={submitting}>
           {submitting ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p>
-        Demo Credentials For Testing :
-      </p>
-      <p>
-        <u>Admin Credentials</u>:<br /><br/>
-        <u>Email</u>: admin@restaurant.com <br />
-        <u>Password</u>: Admin@123<br/><br/>
-        <u>User Credentials: </u><br /><br/>
-        Click Below Register 👇
-        </p>
       <p className="auth-switch">
         No account? <Link to="/register">Register here</Link>
       </p>

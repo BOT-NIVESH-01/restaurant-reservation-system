@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Register() {
   const { register } = useAuth();
@@ -18,10 +19,13 @@ export default function Register() {
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
-    } finally {
       setSubmitting(false);
     }
   };
+
+  if (submitting) {
+    return <LoadingSpinner message="Creating your account..." />;
+  }
 
   return (
     <div className="auth-card">
@@ -34,6 +38,7 @@ export default function Register() {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
+            disabled={submitting}
           />
         </label>
         <label>
@@ -43,6 +48,7 @@ export default function Register() {
             required
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
+            disabled={submitting}
           />
         </label>
         <label>
@@ -53,6 +59,7 @@ export default function Register() {
             minLength={6}
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
+            disabled={submitting}
           />
         </label>
         <button type="submit" className="btn btn-primary" disabled={submitting}>
