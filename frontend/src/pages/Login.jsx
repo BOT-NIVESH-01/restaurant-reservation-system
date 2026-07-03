@@ -60,8 +60,8 @@ export default function Login() {
         <u>Admin Credentials : </u><br/><br/>
       </p>
       <p>
-        <u>Email : </u>admin@restaurant.com<br/><br/>
-        <u>Password : </u>Admin@123
+        <u>Email </u>: admin@restaurant.com<br/><br/>
+        <u>Password </u>: Admin@123
       </p>
       <p>
         For User Credentials, please register a new account.
