@@ -148,6 +148,11 @@ so an admin can't accidentally create a double-booking either.
 - **Backend** — deploy `/backend` to Render/Railway (Node web service).
   `render.yaml` is included as a blueprint. Set `MONGO_URI`, `JWT_SECRET`,
   and `CLIENT_ORIGIN` (your deployed frontend URL) as environment variables.
+- **Database hosting** — keep using the local MongoDB URI during local
+  development. Render runs on a separate machine, so it cannot connect to
+  `localhost` on your computer. For the live backend, set `MONGO_URI` to a
+  reachable MongoDB Atlas (or other hosted MongoDB) connection string. This
+  affects runtime connectivity, not how quickly Render builds the frontend.
 - **Frontend** — deploy `/frontend` to Vercel/Netlify. Set `VITE_API_URL`
   to your deployed backend's `/api` URL. `vercel.json` handles SPA routing.
 - Update `CLIENT_ORIGIN` on the backend once you know the frontend's final
